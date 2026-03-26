@@ -113,5 +113,5 @@ def test_chromadb():
 check("ChromaDB: store and retrieve (in-memory)", test_chromadb)
 
 # ── Summary ───────────────────────────────────────────────────────────────────
-print("\n✨ If everything is green, you're ready for Step 2!\n")
-print("   If anything is red, paste the error and we'll fix it together.\n")
+print("\n✨ If everything is green, good to go!\n")
+print("   If anything is red, there are issues to fix.\n")
