@@ -18,3 +18,22 @@ pip install -r requirements.txt
 cp .env.example .env      # Add GROQ_API_KEY
 streamlit run app.py
 ```
+
+## Read a PDF file like this in the terminal ( I use zsh): 
+```python -c "
+from ingestion.pdf_loader import load_pdf
+
+docs = load_pdf('your_file_name.pdf')
+
+# Look at the first page
+print('--- PAGE 1 TEXT (first 500 chars) ---')
+print(docs[0].page_content[:500])
+
+print()
+print('--- METADATA ---')
+print(docs[0].metadata)
+
+print()
+print(f'--- TOTAL PAGES LOADED: {len(docs)} ---')
+"
+```
