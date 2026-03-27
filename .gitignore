@@ -208,3 +208,6 @@ __marimo__/
 
 #Private PDFs
 Tizian_Schenk_OECD.pdf
+
+#Mac-specific
+.DS_Store

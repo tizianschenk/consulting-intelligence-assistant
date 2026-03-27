@@ -37,3 +37,13 @@ print()
 print(f'--- TOTAL PAGES LOADED: {len(docs)} ---')
 "
 ```
+
+## Try the chunker functions in the terminal
+```python -c "
+from ingestion.pdf_loader import load_pdf
+from ingestion.chunker import chunk_documents, inspect_chunks
+
+docs = load_pdf('your_file_name.pdf')
+chunks = chunk_documents(docs)
+inspect_chunks(chunks, n=3)
+"```
