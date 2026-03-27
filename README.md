@@ -12,10 +12,10 @@ A production-style RAG + Agentic AI application for analyzing  consulting docume
 ```bash
 git clone https://github.com/tizianschenk/consulting-intelligence-assistant
 cd consulting-intelligence-assistant
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-cp .env.example .env      # Add GROQ_API_KEY
+uv venv --python 3.11
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+uv sync
+cp .env.example .env      # Add your GROQ_API_KEY
 streamlit run app.py
 ```
 
