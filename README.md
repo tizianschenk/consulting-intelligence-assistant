@@ -19,6 +19,10 @@ cp .env.example .env      # Add GROQ_API_KEY
 streamlit run app.py
 ```
 
+### Ingestion pipeline
+
+The ingestion pipeline converts raw PDF documents into searchable vector embeddings using a local sentence-transformer model called all-MiniLM-L6-v2, which maps text into a 384-dimensional mathematical space where similar meanings cluster together. I chose ChromaDB for local persistence because it requires zero infrastructure setup, and the architecture is identical to a production system — you'd simply swap ChromaDB for Pinecone without changing any other code."
+
 ## Read a PDF file like this in the terminal ( I use zsh): 
 ```python -c "
 from ingestion.pdf_loader import load_pdf
@@ -46,4 +50,27 @@ from ingestion.chunker import chunk_documents, inspect_chunks
 docs = load_pdf('your_file_name.pdf')
 chunks = chunk_documents(docs)
 inspect_chunks(chunks, n=3)
-"```
+"
+```
+## Ask the PDF a quesion in the terminal like this
+
+```python -c "
+from ingestion.pdf_loader import load_pdf
+from ingestion.chunker import chunk_documents
+from ingestion.embedder import VectorStore
+
+docs = load_pdf('your_file_name.pdf')
+chunks = chunk_documents(docs)
+store = VectorStore()
+store.add_documents(chunks)
+
+print()
+print('--- SEARCHING: what is your question you want to ask the pdf? ---')
+results = store.search('what is your question you want to ask the pdf?', n_results=2)
+
+for i, doc in enumerate(results):
+    print(f'Result {i+1} (similarity: {doc.metadata[\"similarity_score\"]})')
+    print(doc.page_content[:300])
+    print()
+"
+```
