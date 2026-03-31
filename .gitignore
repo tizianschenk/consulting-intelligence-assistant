@@ -211,3 +211,5 @@ Tizian_Schenk_OECD.pdf
 
 #Mac-specific
 .DS_Store
+
+data/chroma_db/

@@ -74,3 +74,26 @@ for i, doc in enumerate(results):
     print()
 "
 ```
+
+## Testing the entire RAG pipeline end to end — loading, chunking, embedding, retrieving, and generating a cited answer:
+
+The RAG chain connects retrieval to generation using LangChain's LCEL pipe syntax — the retrieved chunks get injected into a structured prompt that instructs the LLM to answer only from the provided context and cite every claim with a source and page number. This eliminates hallucination by design rather than hoping the model behaves correctly.
+
+```python -c "
+from ingestion.pdf_loader import load_pdf
+from ingestion.chunker import chunk_documents
+from ingestion.embedder import VectorStore
+from rag.rag_chain import RAGChain, print_response
+
+# Build the pipeline
+docs = load_pdf('your_file_name.pdf')
+chunks = chunk_documents(docs)
+store = VectorStore()
+store.add_documents(chunks)
+
+# Ask a question
+rag = RAGChain(vector_store=store, k=4)
+response = rag.ask('What is your question you want to ask the pdf?')
+print_response(response)
+"
+```
