@@ -97,3 +97,50 @@ response = rag.ask('What is your question you want to ask the pdf?')
 print_response(response)
 "
 ```
+
+
+## Agent's graph
+
+          ┌─────────────────────────────────┐
+          │          User Question           │
+          └──────────────┬──────────────────┘
+                         ↓
+                   ┌─────────────┐
+                   │   ROUTER    │  ← decides what kind of question this is
+                   └──────┬──────┘
+           ┌──────────────┼──────────────┐
+           ↓              ↓              ↓
+     [retrieval]    [comparison]    [summary]
+           ↓              ↓              ↓
+           └──────────────┼──────────────┘
+                         ↓
+                   ┌─────────────┐
+                   │   ANALYST   │  ← synthesizes the answer with citations
+                   └──────┬──────┘
+                         ↓
+                   ┌─────────────┐
+                   │  EVALUATOR  │  ← scores the answer quality
+                   └──────┬──────┘
+                    ↙           ↘
+              [good]           [poor]
+                ↓                ↓
+           return answer      retry once
+
+Testing the full agent end-to-end:
+
+```python -c "
+from ingestion.pdf_loader import load_pdf
+from ingestion.chunker import chunk_documents
+from ingestion.embedder import VectorStore
+from agent.graph import run_agent
+
+# Build the vector store
+docs = load_pdf('your_file_name.pdf')
+chunks = chunk_documents(docs)
+store = VectorStore()
+store.add_documents(chunks)
+
+# Run the agent with a retrieval question
+run_agent('What is your komplex question you want to ask the pdf?', store)
+"
+```
