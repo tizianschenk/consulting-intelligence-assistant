@@ -128,6 +128,9 @@ print_response(response)
 
 Testing the full agent end-to-end:
 
+The agent uses a LangGraph state machine with four nodes — a router that classifies the question type using an LLM, a retriever that fetches relevant chunks, an analyst that synthesizes a cited answer using a route-specific prompt, and an evaluator that scores answer quality and triggers a retry if confidence falls below 0.7. This self-evaluation loop is a simplified version of the LLM-as-judge pattern used in production RAG systems to catch low-quality outputs before they reach the user.
+
+
 ```python -c "
 from ingestion.pdf_loader import load_pdf
 from ingestion.chunker import chunk_documents
