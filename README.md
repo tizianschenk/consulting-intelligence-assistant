@@ -147,3 +147,9 @@ store.add_documents(chunks)
 run_agent('What is your komplex question you want to ask the pdf?', store)
 "
 ```
+
+## Run the streamlit app:
+
+```
+streamlit run app.py
+```
